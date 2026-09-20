@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container, Eyebrow } from "@/components/section";
 import { QuoteBlock } from "@/components/quote-block";
-import { site } from "@/content/site";
+import { navFlags, site } from "@/content/site";
 import { law, coreTheses } from "@/content/manifest";
 import { zones } from "@/content/zones";
 import { floors } from "@/content/floors";
@@ -27,22 +27,20 @@ export default function HomePage() {
             {site.tagline}
           </p>
           <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground animate-rise [animation-delay:240ms]">
-            Здесь описан мир после того, как Сверхразум убрал дефицит. Не сладкая утопия, где
-            все ходят строем и улыбаются, и не Терминатор. Жёсткая, честная, бесконечно
-            глубокая песочница, в которой каждый делает с собой что хочет — и ничего не может
-            сделать с другим без его согласия. Ты можешь прочитать её как кодекс или прожить
-            как первый год.
+            {site.hero}
           </p>
           <div className="mt-10 flex flex-col gap-3 sm:flex-row animate-rise [animation-delay:320ms]">
-            <Button
-              size="lg"
-              className="h-12 px-6 text-base bg-brand text-brand-foreground hover:bg-brand/90"
-              nativeButton={false}
-              render={<Link href="/puteshestvie" />}
-            >
-              Начать путешествие
-              <ArrowRightIcon data-icon="inline-end" />
-            </Button>
+            {navFlags.showJourney ? (
+              <Button
+                size="lg"
+                className="h-12 px-6 text-base bg-brand text-brand-foreground hover:bg-brand/90"
+                nativeButton={false}
+                render={<Link href="/puteshestvie" />}
+              >
+                Начать путешествие
+                <ArrowRightIcon data-icon="inline-end" />
+              </Button>
+            ) : null}
             <Button
               size="lg"
               variant="outline"
