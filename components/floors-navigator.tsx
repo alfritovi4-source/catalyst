@@ -29,7 +29,7 @@ export function FloorsNavigator({ floors }: { floors: Floor[] }) {
       value={String(floor.level)}
       onValueChange={onValueChange}
       orientation="vertical"
-      className="grid gap-8 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-14"
+      className="grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-14"
     >
       <div>
         <div className="rounded-2xl border border-border/70 bg-card/70 p-3">

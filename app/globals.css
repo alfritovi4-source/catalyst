@@ -182,6 +182,11 @@
     font-feature-settings: "kern", "liga", "calt";
     text-rendering: optimizeLegibility;
   }
+  /* Клип только у колонки контента: overflow-x на html/body
+     превращает position:fixed (меню) в обрезанный потомок. */
+  main {
+    overflow-x: clip;
+  }
   ::selection {
     background: color-mix(in oklch, var(--brand) 35%, transparent);
   }

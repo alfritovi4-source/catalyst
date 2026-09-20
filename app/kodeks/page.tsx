@@ -86,10 +86,13 @@ export default function KodeksPage() {
         </ul>
 
         <Tabs defaultValue="does" className="mt-10">
-          <TabsList variant="line" className="w-full justify-start border-b border-border/70 pb-1">
-            <TabsTrigger value="does" className="flex-none px-3">Что делает</TabsTrigger>
-            <TabsTrigger value="never" className="flex-none px-3">Чего не делает никогда</TabsTrigger>
-            <TabsTrigger value="interest" className="flex-none px-3">Его собственный интерес</TabsTrigger>
+          <TabsList
+            variant="line"
+            className="h-auto w-full flex-wrap justify-start gap-x-1 gap-y-2 border-b border-border/70 pb-1.5"
+          >
+            <TabsTrigger value="does" className="h-8 flex-none px-3">Что делает</TabsTrigger>
+            <TabsTrigger value="never" className="h-8 flex-none px-3">Чего не делает никогда</TabsTrigger>
+            <TabsTrigger value="interest" className="h-8 flex-none px-3">Его собственный интерес</TabsTrigger>
           </TabsList>
           <TabsContent value="does" className="pt-6">
             <ol className="grid gap-5 sm:grid-cols-2">
