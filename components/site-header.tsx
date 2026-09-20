@@ -64,6 +64,7 @@ export function SiteHeader() {
                 "border-brand/40 text-brand hover:border-brand hover:bg-brand/10 hover:text-brand",
                 isActive(pathname, item.href) && "bg-brand/10 border-brand",
               )}
+              nativeButton={false}
               render={<Link href={item.href} />}
             >
               {item.label}

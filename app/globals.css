@@ -52,7 +52,24 @@
   --animate-rise: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   --animate-blink: blink 1s steps(2, start) infinite;
   --animate-wave: wave-drift 14s linear infinite;
+  --animate-flash: flash 2.4s ease-out both;
 
+  @keyframes flash {
+    0% {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    15% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    70% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
   @keyframes rise {
     from {
       opacity: 0;

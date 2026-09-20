@@ -36,6 +36,7 @@ export default function HomePage() {
             <Button
               size="lg"
               className="h-12 px-6 text-base bg-brand text-brand-foreground hover:bg-brand/90"
+              nativeButton={false}
               render={<Link href="/puteshestvie" />}
             >
               Начать путешествие
@@ -45,6 +46,7 @@ export default function HomePage() {
               size="lg"
               variant="outline"
               className="h-12 px-6 text-base"
+              nativeButton={false}
               render={<Link href="/kodeks" />}
             >
               Открыть кодекс
@@ -140,7 +142,7 @@ export default function HomePage() {
                 дефицита. Лифт объясняет, кто за что отвечает на каждом уровне и почему Закон
                 Контура работает везде, а Сверхразум — нет.
               </p>
-              <Button variant="outline" className="mt-6" render={<Link href="/etazhi" />}>
+              <Button variant="outline" className="mt-6" nativeButton={false} render={<Link href="/etazhi" />}>
                 <ArrowUpDownIcon data-icon="inline-start" />
                 Открыть лифт
               </Button>
@@ -182,7 +184,7 @@ export default function HomePage() {
                 работу, потом кто-то перестал нуждаться в том, что распределяет. Семь этапов от
                 эпохи Зеркала до последнего дня, когда кто-то работал, потому что иначе умрёт.
               </p>
-              <Button variant="outline" className="mt-6" render={<Link href="/proiskhozhdenie" />}>
+              <Button variant="outline" className="mt-6" nativeButton={false} render={<Link href="/proiskhozhdenie" />}>
                 Читать хронику происхождения
                 <ArrowRightIcon data-icon="inline-end" />
               </Button>

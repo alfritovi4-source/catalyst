@@ -17,6 +17,7 @@ import {
   type Verdict,
   type VerdictTone,
 } from "@/lib/shlyuz";
+import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
 const STEP_DELAY = 650;
 
@@ -26,18 +27,6 @@ const toneClass: Record<VerdictTone, string> = {
   bad: "text-rose-300",
   neutral: "text-foreground",
 };
-
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = React.useState(false);
-  React.useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduced(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
-  return reduced;
-}
 
 function Typewriter({ text, active, speed = 14 }: { text: string; active: boolean; speed?: number }) {
   const [shown, setShown] = React.useState(active ? 0 : text.length);
