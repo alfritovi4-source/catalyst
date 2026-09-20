@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Песочница
 
-## Getting Started
+Интерактивный сайт-лор о мире, где никто не живёт в режиме выживания.
 
-First, run the development server:
+«Песочница» — модель мира после того, как Сверхразум убрал дефицит. Не утопия и не антиутопия: одна аксиома (Закон Контура), набор механик, которые из неё следуют, зоны, где люди живут по-разному и одновременно, честные открытые вопросы и свидетельства жителей. Мир родился из долгого разговора между человеком и языковыми моделями; этот сайт — его кодекс, хроника и два интерактива, в которых правила можно потрогать руками.
+
+Текст обращается к читателю на «ты». Он написан на этаже 0 — в мире дефицита, в сентябре 2026 года — о мире без него.
+
+## Структура сайта
+
+| Маршрут | Что там |
+| --- | --- |
+| `/` | Вход: закон, карта зон, лифт, происхождение |
+| `/kodeks` | Кодекс: Закон Контура и его следствия, что Сверхразум делает и чего не делает никогда, пятнадцать механик с «почему именно так» |
+| `/proiskhozhdenie` | Как он появился: семь этапов от эпохи Зеркала до первого дня, «Почему не человек», Общий пул, легенда |
+| `/etazhi` | Лифт: этажи +2, +1, 0, −1 и глубже — интерактивный навигатор с честным разговором о юрисдикции |
+| `/zony` | Зоны: Лёгкость, Саванна, Тишина, Мастерские, Личные миры, Фронтир, Разгон, Старый мир, Стена, Восстановление |
+| `/hronika` | Стоячая волна: Большой сброс, Пресыщение, Дивергенция — одновременно, не по очереди |
+| `/svidetelstva` | Свидетельства жителей от первого лица с фильтром по зонам |
+| `/voprosy` | Открытые вопросы: позиция А, позиция Б, где мы остановились |
+| `/slovar` | Словарь терминов с якорями |
+| `/shlyuz` | Интерактив: консоль Шлюза — выбери или напиши запрос и посмотри, как он оценивается по цепочке контур → обратимость → воля → траектория → решение → правило |
+| `/puteshestvie` | Интерактив: «Первый год в Песочнице» — текстовое путешествие с выбором, статами и сохранением в браузере |
+
+Оба интерактива детерминированы: за кулисами нет модели и нет API, только правила, записанные явно в данных.
+
+## Запуск локально
+
+Нужен Node.js 22 и npm.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev -- -p 4871
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Сайт откроется на [http://127.0.0.1:4871](http://127.0.0.1:4871).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Другие команды:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint    # ESLint
+npm run build   # production-сборка
+npm run start   # запуск собранной версии
+```
 
-## Learn More
+Стек: Next.js 16 (App Router), TypeScript, Tailwind CSS v4, shadcn/ui на `@base-ui/react`, шрифты Golos Text, Cormorant Garamond и JetBrains Mono через `next/font/google` с кириллическими подмножествами.
 
-To learn more about Next.js, take a look at the following resources:
+## Как организован контент
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Весь лор живёт в типизированных данных в папке `content/` и не смешан с интерфейсом. Чтобы поправить формулировку, добавить зону, свидетельство или сцену, достаточно отредактировать файл данных — компоненты подхватят изменения сами.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Файл | Содержимое |
+| --- | --- |
+| `content/site.ts` | Название, описание, навигация, подпись в подвале |
+| `content/manifest.ts` | Закон Контура и следствия, Сверхразум (делает / не делает / его интерес), ключевые тезисы |
+| `content/mechanics.ts` | Механики: как работает, почему именно так, пример |
+| `content/origin.ts` | Этапы происхождения, «Почему не человек», Общий пул, легенда |
+| `content/floors.ts` | Этажи лифта |
+| `content/zones.ts` | Зоны с режимами спасения и «чем обычно заканчивается» |
+| `content/wave.ts` | Фазы стоячей волны и поправка об одновременности |
+| `content/testimonies.ts` | Свидетельства |
+| `content/questions.ts` | Открытые вопросы |
+| `content/glossary.ts` | Словарь |
+| `content/requests.ts` | Таблица запросов к Шлюзу: категория, контур, обратимость, воля, траектория, правило |
+| `content/journey.ts` | Сцены Путешествия: текст, варианты, эффекты, условные маршруты |
 
-## Deploy on Vercel
+Логика интерактивов вынесена в `lib/`:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `lib/shlyuz.ts` — чистая функция `evaluateRequest(request)`, которая по свойствам запроса строит цепочку вердикта, и `matchRequest(text)` для свободного ввода по ключевым словам.
+- `lib/journey.ts` — движок путешествия: состояние (интерес, топливо, контур, контракт с собой, режим спасения, флаги), условия, эффекты, маршруты, перенаправление на Восстановление при низком топливе и сводка года.
+- `lib/journey-store.ts` — сохранение путешествия в `localStorage` (ключ `sandbox-journey`).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Страницы — в `app/`, компоненты — в `components/`, базовые элементы shadcn/ui — в `components/ui/`.
+
+### Как добавить сцену в Путешествие
+
+Добавь объект в массив `scenes` в `content/journey.ts`:
+
+```ts
+{
+  id: "silence-4",
+  title: "Четвёртый месяц",
+  kicker: "Тишина · месяц 4",
+  text: ["Абзац.", "Ещё абзац."],
+  choices: [
+    { label: "На перекрёсток", to: "crossroads", effects: { interest: 2, fuel: 10 } },
+  ],
+}
+```
+
+Поля `zone` (отмечает посещённую зону), `variants` (абзацы по условию), `when` у вариантов выбора и условные маршруты `to: [{ when, to }, { to }]` — необязательные. Сцены с текстом 60–160 слов читаются лучше всего.
+
+## Дорожная карта
+
+- Комментарии и свидетельства посетителей — нужна база данных и вход.
+- Голосование по открытым вопросам: позиция А или Б, с честной сводкой результатов.
+- Новые сцены Путешествия: второй год, Фронтир целиком, Тишина глубже, ветка родителя.
+- English version.
