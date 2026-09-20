@@ -9,7 +9,7 @@ import { testimonyById } from "@/content/testimonies";
 export const metadata: Metadata = {
   title: "Зоны",
   description:
-    "Десять зон Песочницы, существующих одновременно: Лёгкость, Саванна, Тишина, Мастерские, Личные миры, Фронтир, Разгон, Старый мир, Стена, Восстановление.",
+    "Десять зон Песочницы, существующих одновременно: Лёгкость, Миры выживания, Тишина, Мастерские, Личные миры, Фронтир, Разгон, Старый мир, Стена, Восстановление.",
 };
 
 const fields: { key: "what" | "who" | "how" | "ending" | "rescue"; label: string }[] = [
@@ -60,6 +60,24 @@ export default function ZonesPage() {
                     </Badge>
                   </div>
                   <div>
+                    {zone.keyLine ? (
+                      <p className="font-display mb-8 border-l-2 border-brand pl-5 text-2xl leading-snug text-balance text-foreground sm:text-[1.7rem]">
+                        {zone.keyLine}
+                      </p>
+                    ) : null}
+                    {zone.worlds ? (
+                      <ul className="mb-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3" aria-label="Миры">
+                        {zone.worlds.map((w) => (
+                          <li
+                            key={w.title}
+                            className="rounded-xl border border-border/70 bg-card/60 p-4 transition-colors hover:border-brand/50"
+                          >
+                            <p className="font-medium">{w.title}</p>
+                            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{w.line}</p>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
                     <dl className="grid gap-6 sm:grid-cols-2">
                       {fields.map((f) => (
                         <div

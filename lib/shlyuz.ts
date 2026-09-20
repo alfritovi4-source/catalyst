@@ -89,7 +89,7 @@ export function decide(req: ShlyuzRequest): { kind: DecisionKind; headline: stri
     return { kind: "granted-warned", headline: "Выдано. Режим записан: не спасать.", tone: "warn" };
   }
   if (req.special === "rescue-critical") {
-    return { kind: "granted", headline: "Выдано. Режим записан: до критического.", tone: "ok" };
+    return { kind: "granted", headline: "Выдано. Режим записан: до края.", tone: "ok" };
   }
   if (req.reversibility !== "yes") {
     return { kind: "granted-warned", headline: "Выдано. Ты предупреждён.", tone: "warn" };

@@ -87,7 +87,7 @@ const RECOVERY_COOLDOWN = 3;
 export const rescueModeLabel: Record<RescueMode, string> = {
   save: "спасать",
   none: "не спасать",
-  critical: "до критического",
+  critical: "до края",
 };
 
 export function initialState(): JourneyState {
@@ -272,9 +272,9 @@ const zoneSummaries: Partial<Record<ZoneId, (s: JourneyState) => string>> = {
       return "В своём мире ты столкнулся с вопросом, к которому не был готов, и выключил всё. Честнее, чем притворяться, что ответ есть.";
     return "В своём мире ты дошёл до четвёртого месяца всемогущества и вернулся туда, где могут отказать. Как почти все.";
   },
-  savanna: (s) => {
+  "miry-vyzhivaniya": (s) => {
     if (s.flags.includes("critical-lion"))
-      return "В саванне лев дошёл до твоего горла, и на тебе не осталось ни царапины. Режим Дикого Запада: страх настоящий, тело целое.";
+      return "В саванне лев дошёл до твоего горла, и на тебе не осталось ни царапины. Режим «до края»: страх настоящий, тело целое.";
     if (s.flags.includes("survived-none"))
       return "В саванне ты выбрал «не спасать», и никто не пришёл. Ты выжил с кривой рукой и с самым трудным «нет» в своей жизни.";
     if (s.rescueMode === "save")
