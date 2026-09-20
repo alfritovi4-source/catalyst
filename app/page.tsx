@@ -10,7 +10,7 @@ import { law, coreTheses } from "@/content/manifest";
 import { zones } from "@/content/zones";
 import { floors } from "@/content/floors";
 import { originStages } from "@/content/origin";
-import { pochemuTeasers } from "@/content/pochemu";
+import { pochemuTeaserFootnote, pochemuTeasers } from "@/content/pochemu";
 
 export default function HomePage() {
   return (
@@ -101,6 +101,14 @@ export default function HomePage() {
               </Link>
             ))}
           </div>
+          <p className="mt-5 text-sm text-muted-foreground">
+            <Link
+              href={pochemuTeaserFootnote.href}
+              className="underline decoration-brand/60 decoration-dotted underline-offset-3 hover:text-foreground"
+            >
+              {pochemuTeaserFootnote.text}
+            </Link>
+          </p>
         </Container>
       </section>
 

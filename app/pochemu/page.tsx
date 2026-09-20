@@ -8,6 +8,7 @@ import { Section } from "@/components/section";
 import { SubNav } from "@/components/sub-nav";
 import { Term } from "@/components/term";
 import {
+  cageOfInterest,
   cageSteps,
   flatLine,
   framesSection,
@@ -238,10 +239,58 @@ export default function PochemuPage() {
             </p>
           </div>
         </div>
+
+        {/* Клетка размером с твой интерес */}
+        <div id={cageOfInterest.id} className="mt-20 scroll-mt-28">
+          <h3 className="font-display text-3xl font-semibold text-balance sm:text-4xl">{cageOfInterest.title}</h3>
+          <div className="prose-sandbox mt-6 max-w-3xl text-[1.02rem] text-foreground/90">
+            {cageOfInterest.lead.map((p) => (
+              <p key={p}>{p}</p>
+            ))}
+          </div>
+          <p className="mt-6 max-w-3xl border-l-2 border-rose-400/60 pl-5 text-[0.98rem] leading-relaxed text-foreground/85">
+            <span className="font-mono text-[11px] tracking-widest text-rose-300 uppercase">Цена · </span>
+            {cageOfInterest.price}
+          </p>
+
+          <h4 className="font-display mt-12 text-2xl font-semibold">{cageOfInterest.listTitle}</h4>
+          <ol className="mt-6 grid gap-x-10 gap-y-6 sm:grid-cols-2">
+            {cageOfInterest.items.map((item, i) => (
+              <li key={item.title} className="grid grid-cols-[1.75rem_1fr] gap-3 border-t border-border/60 pt-4">
+                <span className="font-mono text-xs text-brand">{String(i + 1).padStart(2, "0")}</span>
+                <div>
+                  <p className="font-semibold leading-snug">{item.title}</p>
+                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{item.line}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          <div className="mt-10 rounded-2xl border border-brand/40 bg-brand/5 p-6 sm:p-8">
+            <ul className="grid gap-4 sm:grid-cols-3">
+              {cageOfInterest.closing.cells.map((cell) => (
+                <li key={cell.title} className="border-t border-brand/50 pt-3">
+                  <p className="font-display text-2xl font-semibold text-balance">{cell.title}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{cell.line}</p>
+                </li>
+              ))}
+            </ul>
+            <Link
+              href={cageOfInterest.closing.link.href}
+              className="mt-6 inline-flex items-center gap-1.5 text-sm text-brand underline underline-offset-4 hover:no-underline"
+            >
+              {cageOfInterest.closing.link.label}
+              <ArrowRightIcon className="size-3.5" />
+            </Link>
+          </div>
+        </div>
+
         <TermRow
           items={[
+            { slug: "kletka-razmerom-s-interes", label: "Клетка размером с твой интерес" },
             { slug: "sverkhrazum", label: "Сверхразум" },
             { slug: "zakon-kontura", label: "Закон Контура" },
+            { slug: "razgon", label: "Разгон" },
           ]}
         />
       </Section>
