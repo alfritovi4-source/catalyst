@@ -10,6 +10,7 @@ import { law, coreTheses } from "@/content/manifest";
 import { zones } from "@/content/zones";
 import { floors } from "@/content/floors";
 import { originStages } from "@/content/origin";
+import { pochemuTeasers } from "@/content/pochemu";
 
 export default function HomePage() {
   return (
@@ -64,6 +65,42 @@ export default function HomePage() {
           <p className="mt-10 max-w-3xl text-lg leading-relaxed text-muted-foreground">
             {law.gloss}
           </p>
+        </Container>
+      </section>
+
+      <section className="border-b border-border/60 py-16 sm:py-20">
+        <Container>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <Eyebrow>Почему</Eyebrow>
+              <h2 className="font-display mt-3 text-4xl font-semibold tracking-tight">
+                Чего боятся на самом деле
+              </h2>
+            </div>
+            <Link href="/pochemu" className="text-sm text-brand hover:underline hover:underline-offset-4">
+              Вся страница «Почему»
+            </Link>
+          </div>
+          <div className="mt-10 grid gap-4 md:grid-cols-2">
+            {pochemuTeasers.map((t) => (
+              <Link
+                key={t.href}
+                href={t.href}
+                className="group relative overflow-hidden rounded-2xl border border-border/70 bg-card/60 p-6 outline-none transition-colors hover:border-brand/60 focus-visible:ring-3 focus-visible:ring-ring/50 sm:p-8"
+              >
+                <div aria-hidden className="pointer-events-none absolute inset-0 bg-field opacity-40" />
+                <div className="relative">
+                  <p className="font-mono text-[11px] tracking-widest text-muted-foreground uppercase">{t.meta}</p>
+                  <h3 className="font-display mt-2 text-3xl font-semibold group-hover:text-brand">{t.title}</h3>
+                  <p className="mt-4 text-lg leading-snug text-foreground/85">{t.hook}</p>
+                  <p className="mt-6 inline-flex items-center gap-1.5 text-sm text-brand">
+                    Открыть
+                    <ArrowRightIcon className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </Container>
       </section>
 

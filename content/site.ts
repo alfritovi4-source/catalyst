@@ -20,6 +20,7 @@ export type NavItem = {
 export const primaryNav: NavItem[] = [
   { href: "/kodeks", label: "Кодекс" },
   { href: "/proiskhozhdenie", label: "Происхождение" },
+  { href: "/pochemu", label: "Почему" },
   { href: "/etazhi", label: "Лифт" },
   { href: "/zony", label: "Зоны" },
   { href: "/hronika", label: "Хроника" },

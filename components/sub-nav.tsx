@@ -17,28 +17,35 @@ export function SubNav({ items, className }: { items: SubNavItem[]; className?: 
       .filter((el): el is HTMLElement => el !== null);
     if (elements.length === 0) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-        if (visible[0]) setActive(visible[0].target.id);
-      },
-      { rootMargin: "-20% 0px -65% 0px", threshold: [0, 0.1] },
-    );
+    // Активен последний раздел, чей верх поднялся выше линии в 35% высоты окна.
+    // Колбэк срабатывает на пересечении этой же линии, поэтому подсветка не отстаёт.
+    const update = () => {
+      const line = window.innerHeight * 0.35;
+      let current = elements[0].id;
+      for (const el of elements) {
+        if (el.getBoundingClientRect().top <= line) current = el.id;
+      }
+      setActive(current);
+    };
+    const observer = new IntersectionObserver(update, {
+      rootMargin: "-20% 0px -65% 0px",
+      threshold: [0, 0.1],
+    });
     elements.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, [items]);
 
+  // Полноширинная обёртка: sticky работает, только если родитель выше самой панели,
+  // поэтому компонент кладут прямо в <main>, а не внутрь Container.
   return (
     <nav
       aria-label="Разделы страницы"
       className={cn(
-        "sticky top-16 z-30 -mx-4 border-b border-border/60 bg-background/85 px-4 backdrop-blur sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8",
+        "sticky top-16 z-30 border-b border-border/60 bg-background/85 backdrop-blur",
         className,
       )}
     >
-      <ul className="flex gap-1 overflow-x-auto py-2 text-sm [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <ul className="mx-auto flex w-full max-w-7xl gap-1 overflow-x-auto px-4 py-2 text-sm [scrollbar-width:none] sm:px-6 lg:px-8 [&::-webkit-scrollbar]:hidden">
         {items.map((item) => (
           <li key={item.id} className="shrink-0">
             <a

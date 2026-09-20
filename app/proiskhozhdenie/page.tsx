@@ -28,9 +28,7 @@ export default function OriginPage() {
         title="Как он появился"
         lead="Без взрыва, без восстания машин, без даты в учебнике. Сверхразум появился так, как появляется инфраструктура: сначала его никто не заметил, потом без него стало нельзя, потом ему отдали единственное, чего он не хотел. Даты условны, порядок — нет."
       />
-      <Container>
-        <SubNav items={subNav} />
-      </Container>
+      <SubNav items={subNav} />
 
       <section id="hronika" className="scroll-mt-24 py-14 sm:py-20">
         <Container>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageIntro } from "@/components/page-intro";
-import { Container, Section, Prose } from "@/components/section";
+import { Section, Prose } from "@/components/section";
 import { SubNav } from "@/components/sub-nav";
 import { QuoteBlock } from "@/components/quote-block";
 import { Term } from "@/components/term";
@@ -30,9 +30,7 @@ export default function KodeksPage() {
         title="Один закон и всё, что из него следует"
         lead="Здесь нет свода правил. Есть одна аксиома, один инфраструктурный игрок и пятнадцать механик, каждая из которых обязана ответить на вопрос «почему именно так». Если ответа нет — механики нет."
       />
-      <Container>
-        <SubNav items={subNav} />
-      </Container>
+      <SubNav items={subNav} />
 
       <Section id="zakon-kontura" number={1} title={law.title} lead={law.gloss}>
         <QuoteBlock size="lg">{law.text}</QuoteBlock>

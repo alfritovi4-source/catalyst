@@ -66,7 +66,7 @@ export default function ZonesPage() {
                       </p>
                     ) : null}
                     {zone.worlds ? (
-                      <ul className="mb-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3" aria-label="Миры">
+                      <ul className="mb-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-4" aria-label="Миры">
                         {zone.worlds.map((w) => (
                           <li
                             key={w.title}
