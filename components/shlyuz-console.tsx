@@ -126,7 +126,7 @@ export function ShlyuzConsole({ requests }: { requests: ShlyuzRequest[] }) {
               id="shlyuz-input"
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder="Или напиши своими словами: «убери тревогу», «хочу Эверест себе»…"
+              placeholder="Или напиши своими словами: «убери тревогу», «хочу пляж себе»…"
               className="h-10 font-mono text-sm"
               autoComplete="off"
             />
