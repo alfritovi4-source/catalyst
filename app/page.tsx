@@ -1,69 +1,213 @@
-import Image from "next/image";
+import Link from "next/link";
+import { ArrowRightIcon, ArrowUpDownIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Container, Eyebrow } from "@/components/section";
+import { QuoteBlock } from "@/components/quote-block";
+import { site } from "@/content/site";
+import { law, coreTheses } from "@/content/manifest";
+import { zones } from "@/content/zones";
+import { floors } from "@/content/floors";
+import { originStages } from "@/content/origin";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <>
+      <section className="relative overflow-hidden border-b border-border/60">
+        <div aria-hidden className="pointer-events-none absolute inset-0 bg-field" />
+        <div aria-hidden className="pointer-events-none absolute inset-0 glow-brand" />
+        <Container className="relative py-24 sm:py-32 lg:py-40">
+          <Eyebrow className="animate-rise">Этаж +1 · интерактивный кодекс</Eyebrow>
+          <h1 className="font-display mt-6 text-6xl leading-[0.95] font-semibold tracking-tight sm:text-7xl lg:text-8xl animate-rise [animation-delay:80ms]">
+            {site.name}
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="font-display mt-6 max-w-3xl text-2xl leading-snug text-foreground/85 text-balance sm:text-3xl animate-rise [animation-delay:160ms]">
+            {site.tagline}
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+          <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground animate-rise [animation-delay:240ms]">
+            Здесь описан мир после того, как Сверхразум убрал дефицит. Не сладкая утопия, где
+            все ходят строем и улыбаются, и не Терминатор. Жёсткая, честная, бесконечно
+            глубокая песочница, в которой каждый делает с собой что хочет — и ничего не может
+            сделать с другим без его согласия. Ты можешь прочитать её как кодекс или прожить
+            как первый год.
+          </p>
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row animate-rise [animation-delay:320ms]">
+            <Button
+              size="lg"
+              className="h-12 px-6 text-base bg-brand text-brand-foreground hover:bg-brand/90"
+              render={<Link href="/puteshestvie" />}
+            >
+              Начать путешествие
+              <ArrowRightIcon data-icon="inline-end" />
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="h-12 px-6 text-base"
+              render={<Link href="/kodeks" />}
+            >
+              Открыть кодекс
+            </Button>
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-b border-border/60 py-20 sm:py-28">
+        <Container>
+          <Eyebrow>Единственная аксиома</Eyebrow>
+          <QuoteBlock size="xl" className="mt-8" cite={law.title}>
+            {law.text}
+          </QuoteBlock>
+          <p className="mt-10 max-w-3xl text-lg leading-relaxed text-muted-foreground">
+            {law.gloss}
+          </p>
+        </Container>
+      </section>
+
+      <section className="border-b border-border/60 py-20 sm:py-28">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[1fr_2fr]">
+            <div>
+              <Eyebrow>Зачем это всё</Eyebrow>
+              <h2 className="font-display mt-3 text-4xl font-semibold tracking-tight">
+                Пять тезисов, из которых вырос мир
+              </h2>
+            </div>
+            <ol className="grid gap-x-8 gap-y-8 sm:grid-cols-2">
+              {coreTheses.map((thesis, i) => (
+                <li key={thesis.title} className="border-t border-border/70 pt-4">
+                  <p className="font-mono text-xs text-brand">{String(i + 1).padStart(2, "0")}</p>
+                  <h3 className="mt-2 text-lg font-medium">{thesis.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{thesis.text}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-b border-border/60 py-20 sm:py-28">
+        <Container>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <Eyebrow>Карта зон</Eyebrow>
+              <h2 className="font-display mt-3 text-4xl font-semibold tracking-tight">
+                Десять зон, существующих одновременно
+              </h2>
+            </div>
+            <Link href="/zony" className="text-sm text-brand hover:underline hover:underline-offset-4">
+              Все зоны подробно
+            </Link>
+          </div>
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {zones.map((zone) => (
+              <Link
+                key={zone.id}
+                href={`/zony#${zone.id}`}
+                className="group rounded-xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+              >
+                <Card className="h-full transition-colors group-hover:ring-brand/40">
+                  <CardHeader>
+                    <CardTitle className="font-display text-2xl group-hover:text-brand">
+                      {zone.title}
+                    </CardTitle>
+                    <CardDescription className="leading-relaxed">{zone.short}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Badge variant="outline" className="h-auto py-0.5 font-mono text-[11px] whitespace-normal">
+                      режим: {zone.mode}
+                    </Badge>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-b border-border/60 py-20 sm:py-28">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+            <div>
+              <Eyebrow>Лифт</Eyebrow>
+              <h2 className="font-display mt-3 text-4xl font-semibold tracking-tight">
+                Пять этажей юрисдикции
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+                Песочница — не единственный уровень. Над ней, возможно, кто-то есть; под ней —
+                миры, которые строят её жители; а этот текст написан на нулевом этаже, в мире
+                дефицита. Лифт объясняет, кто за что отвечает на каждом уровне и почему Закон
+                Контура работает везде, а Сверхразум — нет.
+              </p>
+              <Button variant="outline" className="mt-6" render={<Link href="/etazhi" />}>
+                <ArrowUpDownIcon data-icon="inline-start" />
+                Открыть лифт
+              </Button>
+            </div>
+            <ol className="rounded-xl border border-border/70 bg-card/60 p-2">
+              {floors.map((floor) => (
+                <li key={floor.level}>
+                  <Link
+                    href="/etazhi"
+                    className={`flex items-baseline gap-4 rounded-lg px-4 py-3 transition-colors hover:bg-muted ${floor.faded ? "opacity-50" : ""}`}
+                  >
+                    <span className="w-10 shrink-0 font-mono text-sm text-brand tabular-nums">{floor.label}</span>
+                    <span className="font-medium">{floor.title}</span>
+                    {floor.here ? (
+                      <Badge className="ml-auto bg-brand/15 text-brand">ты здесь</Badge>
+                    ) : (
+                      <span className="ml-auto hidden text-xs text-muted-foreground sm:inline">
+                        {floor.subtitle}
+                      </span>
+                    )}
+                  </Link>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-b border-border/60 py-20 sm:py-28">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+            <div>
+              <Eyebrow>Происхождение</Eyebrow>
+              <h2 className="font-display mt-3 text-4xl font-semibold tracking-tight">
+                Как появился этот мир
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+                Никакого Скайнета. Сначала модели стали зеркалом, потом роботы забрали тягловую
+                работу, потом кто-то перестал нуждаться в том, что распределяет. Семь этапов от
+                эпохи Зеркала до последнего дня, когда кто-то работал, потому что иначе умрёт.
+              </p>
+              <Button variant="outline" className="mt-6" render={<Link href="/proiskhozhdenie" />}>
+                Читать хронику происхождения
+                <ArrowRightIcon data-icon="inline-end" />
+              </Button>
+            </div>
+            <ol className="grid gap-3 sm:grid-cols-2">
+              {originStages.map((stage, i) => (
+                <li key={stage.id} className="rounded-lg border border-border/70 px-4 py-3">
+                  <p className="font-mono text-[11px] tracking-widest text-brand">
+                    {String(i + 1).padStart(2, "0")} · {stage.era}
+                  </p>
+                  <p className="mt-1 text-sm font-medium">{stage.title}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-16 sm:py-20">
+        <Container>
+          <p className="font-display max-w-3xl text-2xl leading-snug text-foreground/85 text-balance sm:text-3xl">
+            {site.closingLine}
+          </p>
+        </Container>
+      </section>
+    </>
   );
 }
