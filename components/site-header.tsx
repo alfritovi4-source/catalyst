@@ -23,10 +23,7 @@ function isActive(pathname: string, href: string) {
 export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
-
-  React.useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+  const close = () => setOpen(false);
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/65">
@@ -95,6 +92,7 @@ export function SiteHeader() {
                   <Link
                     key={item.href}
                     href={item.href}
+                    onClick={close}
                     className={cn(
                       "rounded-md px-3 py-2.5 text-base text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
                       isActive(pathname, item.href) && "bg-muted text-foreground",
@@ -108,6 +106,7 @@ export function SiteHeader() {
                   <Link
                     key={item.href}
                     href={item.href}
+                    onClick={close}
                     className={cn(
                       "rounded-md px-3 py-2.5 text-base font-medium text-brand transition-colors hover:bg-brand/10",
                       isActive(pathname, item.href) && "bg-brand/10",
