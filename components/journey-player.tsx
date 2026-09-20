@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/dialog";
 import { Progress, ProgressLabel } from "@/components/ui/progress";
 import { sceneById } from "@/content/journey";
+import { testimonies, type Testimony } from "@/content/testimonies";
 import { zoneById } from "@/content/zones";
 import {
   advance,
@@ -32,6 +33,7 @@ import {
   START_SCENE,
   type Choice,
   type JourneyState,
+  type Scene,
 } from "@/lib/journey";
 import {
   getServerSnapshot,
@@ -42,9 +44,22 @@ import {
 } from "@/lib/journey-store";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
-const ARRIVAL_SCENES = new Set([START_SCENE, "rules", "rules-harm"]);
+const ARRIVAL_SCENES = new Set([START_SCENE, "arrival-next", "rules", "rules-harm"]);
 
 type Deltas = { id: number; interest: number; fuel: number };
+
+/** Под концовкой — не больше одного свидетельства, и только своей зоны. */
+function testimonyForEnding(scene: Scene, state: JourneyState): Testimony | null {
+  if (scene.ending !== "gone" && scene.ending !== "death") return null;
+  if (scene.testimony === false) return null;
+  const zone = currentZone(state, sceneById);
+  if (!zone) return null;
+  const tagged = testimonies.filter((t) => t.zone === zone);
+  if (tagged.length === 0) return null;
+  const preferred = typeof scene.testimony === "string" ? scene.testimony : zoneById[zone].testimony;
+  if (!preferred) return null;
+  return tagged.find((t) => t.id === preferred) ?? null;
+}
 
 function formatDelta(n: number) {
   return n > 0 ? `+${n}` : `−${Math.abs(n)}`;
@@ -119,9 +134,12 @@ export function JourneyPlayer() {
   const choices = visibleChoices(state, scene);
   const paragraphs = scene.special === "summary" ? summarize(state) : renderText(scene, state);
   const kicker = scene.kicker ? fillTemplate(scene.kicker, state) : null;
+  const title = fillTemplate(scene.title, state);
   const isEnding = scene.ending === "gone" || scene.ending === "death";
   const isSummary = scene.special === "summary";
   const lowFuel = state.fuel <= LOW_FUEL;
+  const endingTestimony = testimonyForEnding(scene, state);
+  const showDose = state.flags.includes("drugs") && state.loop > 0;
 
   const afterChange = React.useCallback(() => {
     requestAnimationFrame(() => {
@@ -221,7 +239,7 @@ export function JourneyPlayer() {
             tabIndex={-1}
             className="font-display mt-3 text-4xl leading-[1.05] font-semibold tracking-tight text-balance outline-none sm:text-5xl"
           >
-            {scene.title}
+            {title}
           </h2>
 
           <div className="prose-sandbox mt-6 max-w-2xl text-[1.05rem] text-foreground/90 sm:text-lg">
@@ -229,6 +247,25 @@ export function JourneyPlayer() {
               <p key={i}>{p}</p>
             ))}
           </div>
+
+          {endingTestimony ? (
+            <aside
+              className="mt-6 max-w-2xl rounded-xl border border-border/70 bg-background/40 px-4 py-3"
+              aria-label="Свидетельство этой зоны"
+            >
+              <p className="font-mono text-[11px] tracking-widest text-brand uppercase">Свидетельство</p>
+              <p className="mt-2 text-sm leading-relaxed text-foreground/90">«{endingTestimony.pull}»</p>
+              <p className="mt-2 text-xs text-muted-foreground">
+                {endingTestimony.name}, {endingTestimony.role}
+              </p>
+              <Link
+                href={`/svidetelstva#${endingTestimony.id}`}
+                className="mt-2 inline-block text-sm text-brand underline underline-offset-4"
+              >
+                Полный текст на странице свидетельств
+              </Link>
+            </aside>
+          ) : null}
 
           {isSummary && visited.length > 0 ? (
             <div className="mt-6 flex flex-wrap gap-2">
@@ -242,14 +279,14 @@ export function JourneyPlayer() {
 
           <ol className="mt-8 grid gap-2.5" aria-label="Варианты">
             {choices.map((c, i) => (
-              <li key={c.label}>
+              <li key={`${c.label}-${i}`}>
                 {c.href ? (
                   <Link
                     href={c.href}
                     className="group flex w-full items-start gap-3 rounded-xl border border-border/80 bg-background/40 px-4 py-3 text-left transition-colors outline-none hover:border-brand/60 hover:bg-card focus-visible:ring-3 focus-visible:ring-ring/50"
                   >
                     <span className="pt-0.5 font-mono text-xs text-muted-foreground">{i + 1}</span>
-                    <span className="flex-1 text-[0.95rem] leading-snug">{c.label}</span>
+                    <span className="flex-1 text-[0.95rem] leading-snug">{fillTemplate(c.label, state)}</span>
                     <ArrowUpRightIcon className="mt-0.5 size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-brand" />
                   </Link>
                 ) : (
@@ -260,7 +297,7 @@ export function JourneyPlayer() {
                   >
                     <span className="pt-0.5 font-mono text-xs text-muted-foreground">{i + 1}</span>
                     <span className="flex-1">
-                      <span className="block text-[0.95rem] leading-snug">{c.label}</span>
+                      <span className="block text-[0.95rem] leading-snug">{fillTemplate(c.label, state)}</span>
                       {c.hint ? (
                         <span className="mt-0.5 block text-xs text-muted-foreground">{c.hint}</span>
                       ) : null}
@@ -343,6 +380,12 @@ export function JourneyPlayer() {
           <dd>{state.rescueMode ? rescueModeLabel[state.rescueMode] : "не выбран"}</dd>
           <dt className="text-muted-foreground">Где ты</dt>
           <dd>{whereLabel(state)}</dd>
+          {showDose ? (
+            <>
+              <dt className="text-muted-foreground">Доза</dt>
+              <dd>Раз {state.loop}</dd>
+            </>
+          ) : null}
         </dl>
 
         <div className="mt-6 border-t border-border/60 pt-5">
